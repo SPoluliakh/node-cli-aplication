@@ -9,13 +9,12 @@ const contactsPath = path.join(__dirname, "db", "contacts.json");
 const listContacts = async () => {
   const data = await fs.readFile(contactsPath);
   const contacts = await JSON.parse(data);
-  console.log(contacts);
   return contacts;
 };
 
 const getContactById = async (id) => {
   const data = await listContacts();
-  const contact = data.find((cont) => cont.id === id);
+  const contact = data.find((item) => item.id == id);
   if (!contact) {
     return null;
   }
@@ -24,7 +23,7 @@ const getContactById = async (id) => {
 
 const removeContact = async (id) => {
   const data = await listContacts();
-  const idx = data.findIndex((cont) => cont.id === id);
+  const idx = data.findIndex((item) => item.id == id);
   if (idx === -1) {
     return null;
   }
