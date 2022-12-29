@@ -29,6 +29,18 @@ const invokeActions = async ({ action, id, name, email, phone }) => {
       });
       console.log(contacToAdd);
       break;
+    case "updateById":
+      const contacToUpdate = await contactsOperations.updateContact({
+        id,
+        name,
+        email,
+        phone,
+      });
+      if (!contacToUpdate) {
+        throw new Error(`contact whith id = ${id} not found`);
+      }
+      console.log(contacToUpdate);
+      break;
     default:
       console.log(`No ${action} type of action`);
   }

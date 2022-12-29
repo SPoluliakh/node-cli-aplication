@@ -3,8 +3,6 @@ const path = require("path");
 const { v4 } = require("uuid");
 
 const contactsPath = path.join(__dirname, "db", "contacts.json");
-// const contactsPath = path.resolve("db/contacts.json");
-// console.log(contactsPath);
 
 const listContacts = async () => {
   const data = await fs.readFile(contactsPath);
@@ -40,9 +38,22 @@ const addContact = async (data) => {
   return updatedContact;
 };
 
+const updateContact = async (body) => {
+  const { id } = body;
+  const result = await listContacts();
+  const idx = result.findIndex((item) => item.id === id);
+  if (idx === -1) {
+    return null;
+  }
+  result[idx] = { ...body };
+  await fs.writeFile(contactsPath, JSON.stringify(result));
+  return result[idx];
+};
+
 module.exports = {
   listContacts,
   getContactById,
   removeContact,
   addContact,
+  updateContact,
 };
